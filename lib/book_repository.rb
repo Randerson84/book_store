@@ -20,7 +20,7 @@ class BookRepository
     end
     def find(id)
         # Executes the SQL query:
-        sql = 'SELECT id, title, author_name FROM books WHERE id = 1;'
+        sql = "SELECT id, title, author_name FROM books WHERE id = #{id};"
         result = DatabaseConnection.exec_params(sql, [])
         
         result.each do |record|
