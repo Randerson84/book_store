@@ -20,18 +20,16 @@ class BookRepository
     end
     def find(id)
         # Executes the SQL query:
-        sql = "SELECT id, title, author_name FROM books WHERE id = #{id};"
-        result = DatabaseConnection.exec_params(sql, [])
+        sql = 'SELECT id, title, author_name FROM books WHERE id = $1;'
+        params = [id]
+        result = DatabaseConnection.exec_params(sql, params)
         
-        result.each do |record|
-            book = Book.new
-            book.id = record['id']
-            book.title = record['title']
-            book.author_name = record['author_name']
-            return book
-        end
-        
-
+        record = result[0]
+        book = Book.new
+        book.id = record['id']
+        book.title = record['title']
+        book.author_name = record['author_name']
+        return book
         # Returns a single book object.
     end
 end
